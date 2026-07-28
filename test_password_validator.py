@@ -99,6 +99,16 @@ class TestEdgeCases:
         # special-character requirement unmet.
         assert validate_password("Abcdefg1\U0001F512") is False
 
+    def test_family_emoji_does_not_count_as_special_character(self):
+        # The family emoji is actually 7 Unicode code points (four person
+        # emoji joined by zero-width-joiner characters, U+200D), so len()
+        # and the character loop both operate on code points rather than
+        # the single visual glyph a person sees -- meaning the password is
+        # much longer than 9 characters, and every one of those 7 code
+        # points independently fails the upper/lower/digit/special checks,
+        # leaving the special-character requirement unmet.
+        assert validate_password("Abcdefg1\U0001F468‍\U0001F469‍\U0001F467‍\U0001F466") is False
+
     def test_none_input_raises_type_error(self):
         # Documents current crash behavior: the function does not guard
         # against non-string input, so None raises TypeError (len(None)).
