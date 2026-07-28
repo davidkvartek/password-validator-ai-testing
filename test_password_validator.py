@@ -47,6 +47,9 @@ class TestInvalidPasswords:
     def test_only_lowercase_letters(self):
         assert validate_password("abcdefgh") is False
 
+    def test_only_uppercase_letters(self):
+        assert validate_password("ABCDEFGH") is False
+
     def test_only_digits(self):
         assert validate_password("12345678") is False
 
