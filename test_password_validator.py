@@ -1,3 +1,5 @@
+import time
+
 import pytest
 
 from password_validator import validate_password
@@ -108,6 +110,21 @@ class TestEdgeCases:
         # points independently fails the upper/lower/digit/special checks,
         # leaving the special-character requirement unmet.
         assert validate_password("Abcdefg1\U0001F468‍\U0001F469‍\U0001F467‍\U0001F466") is False
+
+    def test_long_password_performance(self):
+        # Regression guard against a future refactor accidentally
+        # introducing quadratic behavior (e.g., repeated password.count(c)
+        # calls or backtracking regex) into what is currently an O(n)
+        # single-pass loop.
+        password = "Aa1!" + ("x" * 49996)
+        assert len(password) == 50000
+
+        start = time.perf_counter()
+        result = validate_password(password)
+        elapsed = time.perf_counter() - start
+
+        assert result is True
+        assert elapsed < 1.0
 
     def test_none_input_raises_type_error(self):
         # Documents current crash behavior: the function does not guard
