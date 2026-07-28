@@ -93,6 +93,12 @@ class TestEdgeCases:
         assert validate_password("Abcdefg1! ") is True
         assert validate_password(" Abcdefg1! ") is True
 
+    def test_emoji_does_not_count_as_special_character(self):
+        # The emoji is not upper, lower, digit, or in the allowed special
+        # character set, so it's silently ignored, leaving the
+        # special-character requirement unmet.
+        assert validate_password("Abcdefg1\U0001F512") is False
+
     def test_none_input_raises_type_error(self):
         # Documents current crash behavior: the function does not guard
         # against non-string input, so None raises TypeError (len(None)).
