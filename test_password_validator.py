@@ -111,6 +111,13 @@ class TestEdgeCases:
         # leaving the special-character requirement unmet.
         assert validate_password("Abcdefg1\U0001F468‍\U0001F469‍\U0001F467‍\U0001F466") is False
 
+    def test_valid_very_long_password(self):
+        # Distinct from test_valid_long_password (28 chars): confirms
+        # there's no accidental upper bound or off-by-one issue at scale.
+        password = "Aa1!" + ("x" * 4996)
+        assert len(password) == 5000
+        assert validate_password(password) is True
+
     def test_long_password_performance(self):
         # Regression guard against a future refactor accidentally
         # introducing quadratic behavior (e.g., repeated password.count(c)
