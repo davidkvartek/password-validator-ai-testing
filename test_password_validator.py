@@ -85,6 +85,9 @@ class TestEdgeCases:
     def test_exactly_meets_each_requirement_once(self):
         assert validate_password("Aa1!aaaa") is True
 
+    def test_all_whitespace_password(self):
+        assert validate_password("        ") is False
+
     def test_none_input_raises_type_error(self):
         # Documents current crash behavior: the function does not guard
         # against non-string input, so None raises TypeError (len(None)).
