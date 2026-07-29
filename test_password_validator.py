@@ -84,9 +84,13 @@ class TestEdgeCases:
     def test_all_whitespace_password(self):
         assert validate_password("        ") is False
 
-    def test_valid_password_with_surrounding_whitespace(self):
+    def test_valid_password_with_leading_whitespace(self):
         assert validate_password(" Abcdefg1!") is True
+
+    def test_valid_password_with_trailing_whitespace(self):
         assert validate_password("Abcdefg1! ") is True
+
+    def test_valid_password_with_leading_and_trailing_whitespace(self):
         assert validate_password(" Abcdefg1! ") is True
 
     def test_emoji_does_not_count_as_special_character(self):
