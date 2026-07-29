@@ -76,7 +76,10 @@ class TestEdgeCases:
         assert validate_password("Ééééééé1!") is True
 
     def test_non_string_like_numeric_characters_still_count_as_digits(self):
-        assert validate_password("Abcdefg0!") is True
+        # '٠' (Arabic-Indic digit zero) is not a plain ASCII 0-9
+        # digit, but str.isdigit() returns True for it, so it should still
+        # satisfy the digit requirement.
+        assert validate_password("Abcdefg٠!") is True
 
     def test_exactly_meets_each_requirement_once(self):
         assert validate_password("Aa1!aaaa") is True
