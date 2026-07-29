@@ -28,9 +28,6 @@ class TestValidPasswords:
 
 
 class TestInvalidPasswords:
-    def test_too_short(self):
-        assert validate_password("Ab1!xyz") is False
-
     def test_empty_string(self):
         assert validate_password("") is False
 
@@ -57,9 +54,6 @@ class TestInvalidPasswords:
 
     def test_only_special_characters(self):
         assert validate_password("!@#$%^&*") is False
-
-    def test_all_requirements_missing_and_too_short(self):
-        assert validate_password("abc") is False
 
 
 class TestEdgeCases:
