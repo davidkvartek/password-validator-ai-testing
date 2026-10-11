@@ -1,6 +1,8 @@
-# password-validator-ai-testing
+# Auditing an AI-Generated Test Suite
 
-Password validator built with Claude Code, with an AI-generated pytest suite audited and extended for boundary conditions and edge cases the AI missed on first pass.
+Claude Code built a password validator and its pytest suite. The suite passed, but it was thin: it missed boundary, input-type, and rule-isolation cases. This repo shows the audit, the gaps I found, and the tests I added to close them.
+
+**Original AI suite:** 22 tests. **After audit:** 30 tests. Added 8 for uncovered cases, removed 2 redundant ones, split 1 combined test into 3 isolated cases, and fixed 1 test that passed without testing what it claimed.
 
 ## Audit process
 
